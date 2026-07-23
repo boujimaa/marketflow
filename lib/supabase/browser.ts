@@ -3,8 +3,9 @@
 import { createBrowserClient } from "@supabase/ssr";
 import { type SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseEnvironment } from "./env";
+import type { Database } from "@/types/database";
 
-let browserClient: SupabaseClient | null = null;
+let browserClient: SupabaseClient<Database> | null = null;
 
 /**
  * Returns a singleton Supabase client for browser-side usage.
@@ -17,7 +18,7 @@ export function createSupabaseBrowserClient() {
 
   const { publishableKey, url } = getSupabaseEnvironment();
 
-  browserClient = createBrowserClient(url, publishableKey);
+  browserClient = createBrowserClient<Database>(url, publishableKey);
 
   return browserClient;
 }
