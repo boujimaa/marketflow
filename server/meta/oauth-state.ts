@@ -7,6 +7,7 @@ const COOKIE_MAX_AGE_SECONDS = 10 * 60;
 export type FacebookOAuthStateCookie = {
   state: string;
   userId: string;
+  workspaceId: string;
 };
 
 export function createFacebookOAuthStateCookieValue(
@@ -25,13 +26,14 @@ export function parseFacebookOAuthStateCookie(
   try {
     const parsed = JSON.parse(value) as Partial<FacebookOAuthStateCookie>;
 
-    if (!parsed.state || !parsed.userId) {
+    if (!parsed.state || !parsed.userId || !parsed.workspaceId) {
       return null;
     }
 
     return {
       state: parsed.state,
       userId: parsed.userId,
+      workspaceId: parsed.workspaceId,
     };
   } catch {
     return null;

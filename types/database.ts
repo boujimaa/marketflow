@@ -40,14 +40,14 @@ export type Database = {
         { id?: string; workspace_id?: string; provider?: string; provider_user_id?: string; access_token?: string; refresh_token?: string | null; token_type?: string; expires_at?: string | null; scopes?: string[]; metadata?: Json; created_at?: string; updated_at?: string }
       >;
       facebook_pages: Table<
-        { id: string; workspace_id: string; social_account_id: string; page_id: string; page_name: string; page_access_token: string; connected: boolean; created_at: string; updated_at: string },
-        { id?: string; workspace_id: string; social_account_id: string; page_id: string; page_name: string; page_access_token: string; connected?: boolean; created_at?: string; updated_at?: string },
-        { id?: string; workspace_id?: string; social_account_id?: string; page_id?: string; page_name?: string; page_access_token?: string; connected?: boolean; created_at?: string; updated_at?: string }
+        { id: string; workspace_id: string; social_account_id: string | null; social_token_id: string | null; page_id: string; page_name: string; page_access_token: string; profile_picture_url: string | null; connected: boolean; status: string; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; social_account_id?: string | null; social_token_id?: string | null; page_id: string; page_name: string; page_access_token: string; profile_picture_url?: string | null; connected?: boolean; status?: string; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; social_account_id?: string | null; social_token_id?: string | null; page_id?: string; page_name?: string; page_access_token?: string; profile_picture_url?: string | null; connected?: boolean; status?: string; created_at?: string; updated_at?: string }
       >;
       instagram_accounts: Table<
-        { id: string; workspace_id: string; facebook_page_id: string; instagram_id: string; username: string; connected: boolean; created_at: string; updated_at: string },
-        { id?: string; workspace_id: string; facebook_page_id: string; instagram_id: string; username: string; connected?: boolean; created_at?: string; updated_at?: string },
-        { id?: string; workspace_id?: string; facebook_page_id?: string; instagram_id?: string; username?: string; connected?: boolean; created_at?: string; updated_at?: string }
+        { id: string; workspace_id: string; facebook_page_id: string; instagram_id: string; username: string; profile_picture_url: string | null; connected: boolean; status: string; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; facebook_page_id: string; instagram_id: string; username: string; profile_picture_url?: string | null; connected?: boolean; status?: string; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; facebook_page_id?: string; instagram_id?: string; username?: string; profile_picture_url?: string | null; connected?: boolean; status?: string; created_at?: string; updated_at?: string }
       >;
       media: Table<
         { id: string; workspace_id: string; file_name: string; file_type: string; storage_path: string; size: number; width: number | null; height: number | null; created_at: string; updated_at: string },

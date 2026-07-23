@@ -136,6 +136,14 @@ export class SocialAuthService {
     return { refreshed: true as const, connection: this.toSafeConnection(updated) };
   }
 
+  encryptToken(value: string): string {
+    return encrypt(value, this.encryptionKey);
+  }
+
+  decryptToken(value: string): string {
+    return decrypt(value, this.encryptionKey);
+  }
+
   private async requireToken(tokenId: string, workspaceId: string): Promise<StoredToken> {
     const token = await this.tokens.findById(tokenId, workspaceId);
     if (!token) throw new Error("Social connection not found.");
@@ -144,8 +152,8 @@ export class SocialAuthService {
 
   private toProviderToken(token: StoredToken): ProviderToken {
     return {
-      accessToken: decrypt(token.access_token, this.encryptionKey),
-      refreshToken: token.refresh_token ? decrypt(token.refresh_token, this.encryptionKey) : null,
+      accessToken: this.decryptToken(token.access_token),
+      refreshToken: token.refresh_token ? this.decryptToken(token.refresh_token) : null,
       tokenType: token.token_type,
       expiresAt: token.expires_at,
       scopes: token.scopes,
