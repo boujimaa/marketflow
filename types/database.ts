@@ -34,6 +34,11 @@ export type Database = {
         { id?: string; workspace_id: string; provider: string; provider_user_id: string; access_token: string; refresh_token?: string | null; token_expires_at?: string | null; status?: string; created_at?: string; updated_at?: string },
         { id?: string; workspace_id?: string; provider?: string; provider_user_id?: string; access_token?: string; refresh_token?: string | null; token_expires_at?: string | null; status?: string; created_at?: string; updated_at?: string }
       >;
+      social_tokens: Table<
+        { id: string; workspace_id: string; provider: string; provider_user_id: string; access_token: string; refresh_token: string | null; token_type: string; expires_at: string | null; scopes: string[]; metadata: Json; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; provider: string; provider_user_id: string; access_token: string; refresh_token?: string | null; token_type?: string; expires_at?: string | null; scopes?: string[]; metadata?: Json; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; provider?: string; provider_user_id?: string; access_token?: string; refresh_token?: string | null; token_type?: string; expires_at?: string | null; scopes?: string[]; metadata?: Json; created_at?: string; updated_at?: string }
+      >;
       facebook_pages: Table<
         { id: string; workspace_id: string; social_account_id: string; page_id: string; page_name: string; page_access_token: string; connected: boolean; created_at: string; updated_at: string },
         { id?: string; workspace_id: string; social_account_id: string; page_id: string; page_name: string; page_access_token: string; connected?: boolean; created_at?: string; updated_at?: string },

@@ -1,33 +1,22 @@
-import {
-  createSocialAccountSchema,
-  updateSocialAccountStatusSchema,
-} from "@/lib/validation/social-account";
-import { workspaceIdSchema } from "@/lib/validation/workspace";
-import { SocialAccountRepository } from "@/repositories/social-account.repository";
+import { getProviderAccountsSchema } from "@/lib/validation/social-auth.validation";
+import { SocialTokenRepository } from "@/repositories/social-token.repository";
 
 export class SocialAccountService {
-  constructor(private readonly socialAccounts: SocialAccountRepository) {}
+  constructor(private readonly tokens: SocialTokenRepository) {}
 
-  async createSocialAccount(input: unknown) {
-    const account = createSocialAccountSchema.parse(input);
+  async getProviderAccounts(input: unknown) {
+    const { provider, workspaceId } = getProviderAccountsSchema.parse(input);
+    const connections = await this.tokens.listByWorkspace(workspaceId, provider);
 
-    return this.socialAccounts.create({
-      workspace_id: account.workspaceId,
-      provider: account.provider,
-      provider_user_id: account.providerUserId,
-      access_token: account.accessToken,
-      refresh_token: account.refreshToken ?? null,
-      token_expires_at: account.tokenExpiresAt ?? null,
-      status: account.status,
-    });
-  }
-
-  async listSocialAccounts(workspaceId: string) {
-    return this.socialAccounts.listByWorkspace(workspaceIdSchema.parse(workspaceId));
-  }
-
-  async updateConnectionStatus(input: unknown) {
-    const { socialAccountId, status, workspaceId } = updateSocialAccountStatusSchema.parse(input);
-    return this.socialAccounts.updateStatus(socialAccountId, workspaceId, status);
+    return connections.map((connection) => ({
+      id: connection.id,
+      provider: connection.provider,
+      providerUserId: connection.provider_user_id,
+      expiresAt: connection.expires_at,
+      scopes: connection.scopes,
+      metadata: connection.metadata,
+      createdAt: connection.created_at,
+      updatedAt: connection.updated_at,
+    }));
   }
 }
