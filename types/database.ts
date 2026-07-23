@@ -50,9 +50,19 @@ export type Database = {
         { id?: string; workspace_id?: string; file_name?: string; file_type?: string; storage_path?: string; size?: number; width?: number | null; height?: number | null; created_at?: string; updated_at?: string }
       >;
       posts: Table<
-        { id: string; workspace_id: string; title: string; caption: string | null; status: string; created_at: string; updated_at: string },
-        { id?: string; workspace_id: string; title: string; caption?: string | null; status?: string; created_at?: string; updated_at?: string },
-        { id?: string; workspace_id?: string; title?: string; caption?: string | null; status?: string; created_at?: string; updated_at?: string }
+        { id: string; workspace_id: string; title: string; caption: string | null; status: string; publishing_options: Json; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; title: string; caption?: string | null; status?: string; publishing_options?: Json; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; title?: string; caption?: string | null; status?: string; publishing_options?: Json; created_at?: string; updated_at?: string }
+      >;
+      post_media: Table<
+        { id: string; workspace_id: string; post_id: string; media_id: string; sort_order: number; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; post_id: string; media_id: string; sort_order?: number; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; post_id?: string; media_id?: string; sort_order?: number; created_at?: string; updated_at?: string }
+      >;
+      post_social_accounts: Table<
+        { id: string; workspace_id: string; post_id: string; social_account_id: string; created_at: string; updated_at: string },
+        { id?: string; workspace_id: string; post_id: string; social_account_id: string; created_at?: string; updated_at?: string },
+        { id?: string; workspace_id?: string; post_id?: string; social_account_id?: string; created_at?: string; updated_at?: string }
       >;
       post_versions: Table<
         { id: string; workspace_id: string; post_id: string; caption: string | null; version_number: number; created_at: string; updated_at: string },
